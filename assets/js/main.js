@@ -88,15 +88,23 @@
          div .game-background que el widget crea para los juegos que sí. */
       var deseado = mount.getAttribute('data-game-bg');
       if (deseado) {
+        var logo = document.querySelector('.header__logo img');
+        var base = logo ? logo.getAttribute('src').replace(/logo\.webp$/, '') : './assets/img/';
         var host = mount.querySelector('.extended-game-with-slots');
         if (host && !host.querySelector('.game-background')) {
-          var logo = document.querySelector('.header__logo img');
-          var base = logo ? logo.getAttribute('src').replace(/logo\.webp$/, '') : './assets/img/';
           var bg = document.createElement('div');
           bg.className = 'game-background';
           bg.style.cssText = 'background-image:url(' + base + deseado + ');opacity:.7';
           host.insertBefore(bg, host.firstChild);
         }
+        /* si el panel de ERD trae su propio fondo desde el WordPress viejo,
+           lo sustituimos por nuestra copia local (evita hotlinking y
+           sobrevivirá al apagado del WordPress) */
+        mount.querySelectorAll('.game-background').forEach(function (g) {
+          if ((g.style.backgroundImage || '').indexOf('macabroescaperoom.com') !== -1) {
+            g.style.backgroundImage = 'url(' + base + deseado + ')';
+          }
+        });
       }
     };
     new MutationObserver(reparar).observe(mount, { childList: true, subtree: true });

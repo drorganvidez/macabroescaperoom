@@ -286,6 +286,9 @@ h3 { font-size: clamp(1.15rem, 2.6vw, 1.6rem); }
 }
 .awards__grid img {
   width: clamp(124px, 15vw, 184px); height: auto;
+}
+.awards__grid img:first-child {
+  width: clamp(190px, 26vw, 310px);
   filter: drop-shadow(0 0 22px rgba(201, 162, 74, .35));
   transition: transform .25s, filter .25s;
 }

@@ -493,8 +493,9 @@ table.precios tr:hover td { background: rgba(193, 18, 32, .07); }
 .faq summary::-webkit-details-marker { display: none; }
 .faq summary::after {
   content: "+";
-  position: absolute; right: 1.1em; top: 50%; translate: 0 -50%;
-  font-family: var(--font-display); font-size: 1.3em; color: var(--blood-bright);
+  position: absolute; right: .75em; top: 50%; translate: 0 -50%;
+  font-family: var(--font-display); font-size: 1.9em; font-weight: 700; color: var(--blood-bright);
+  line-height: 1;
   transition: rotate .2s;
 }
 .faq details[open] summary::after { rotate: 45deg; }

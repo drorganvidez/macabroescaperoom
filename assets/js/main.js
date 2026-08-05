@@ -74,6 +74,20 @@
     }, { once: true });
   });
 
+  /* Parche de contraste del widget ERD sobre fondo oscuro: el panel envía la
+     fecha del paso de hora con style="color:#000 !important" en línea, que
+     ninguna hoja CSS puede anular; lo reescribimos al pintar y en cada paso. */
+  var mount = document.querySelector('.erd-mount:not(.erd-mount--light)');
+  if (mount && 'MutationObserver' in window) {
+    var reparar = function () {
+      mount.querySelectorAll('.checkout-slots-heading, .checkout-slots-heading__date').forEach(function (el) {
+        el.style.setProperty('color', '#e9e2d6', 'important');
+      });
+    };
+    new MutationObserver(reparar).observe(mount, { childList: true, subtree: true });
+    reparar();
+  }
+
   /* Aviso de cookies */
   var KEY = 'macabro-cookies-ok';
   var box = document.getElementById('cookies');

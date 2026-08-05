@@ -42,8 +42,9 @@
 
 /* ---------- Reset mínimo ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-html:focus-within { scroll-behavior: smooth; }
+/* El scroll suave solo se aplica por JS a los clics de ancla de la misma página;
+   así el aterrizaje con #fragmento desde otra página es instantáneo. */
+html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   background: var(--bg);
@@ -68,7 +69,6 @@ ul { padding-left: 1.2em; }
 ::selection { background: var(--blood); color: #fff; }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
 
@@ -297,21 +297,18 @@ h3 { font-size: clamp(1.15rem, 2.6vw, 1.6rem); }
   display: grid;
 }
 .sala-card:hover { transform: translateY(-6px); border-color: var(--blood); box-shadow: var(--shadow-card), var(--glow-red); }
-.sala-card__img { position: relative; aspect-ratio: 3 / 4; overflow: hidden; }
+.sala-card__img { position: relative; aspect-ratio: 2 / 3; overflow: hidden; }
 .sala-card__img img {
-  width: 100%; height: 100%; object-fit: cover; object-position: top center;
+  width: 100%; height: 100%; object-fit: cover; object-position: center;
   transition: transform .5s ease;
 }
 .sala-card:hover .sala-card__img img { transform: scale(1.045); }
-.sala-card__img::after {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, transparent 45%, rgba(7, 6, 9, .92) 88%, var(--bg-3) 100%);
-}
 .sala-card__body {
   position: relative;
-  margin-top: -5.5rem; z-index: 1;
-  padding: 0 clamp(1.2rem, 3vw, 2rem) clamp(1.4rem, 3vw, 2rem);
+  border-top: 1px solid rgba(193, 18, 32, .35);
+  padding: clamp(1.1rem, 2.5vw, 1.6rem) clamp(1.2rem, 3vw, 2rem) clamp(1.4rem, 3vw, 2rem);
   text-align: center;
+  background: linear-gradient(180deg, rgba(193, 18, 32, .06), transparent 40%);
 }
 .sala-card__body h3 { font-size: clamp(1.6rem, 3.4vw, 2.2rem); text-transform: uppercase; margin-bottom: .2em; }
 .sala-card__body p { color: var(--muted); margin: 0 0 1.2em; }
@@ -538,7 +535,7 @@ table.precios tr:hover td { background: rgba(193, 18, 32, .07); }
   box-shadow: var(--shadow-card);
   transition: transform .2s, border-color .2s, box-shadow .2s, opacity .2s, filter .2s;
 }
-.sel-card img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; object-position: top center; }
+.sel-card img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; object-position: center; }
 .sel-card b {
   font-family: var(--font-display);
   font-size: 1.1rem; letter-spacing: .14em; text-transform: uppercase;
@@ -562,6 +559,23 @@ table.precios tr:hover td { background: rgba(193, 18, 32, .07); }
 }
 .sel-card.is-dim { opacity: .45; filter: grayscale(.75); }
 .sel-card.is-dim:hover { opacity: 1; filter: none; }
+/* Variante compacta del selector (páginas con calendario): el calendario queda a la vista */
+.selector--mini { display: flex; flex-wrap: wrap; justify-content: center; gap: .9rem; max-width: none; margin-top: 1.6rem; }
+.selector--mini .sel-card {
+  display: flex; align-items: center; gap: .7rem;
+  border-radius: 999px;
+  padding: .35rem 1.2rem .35rem .45rem;
+}
+.selector--mini .sel-card img { width: 46px; height: 46px; aspect-ratio: 1; border-radius: 50%; object-fit: cover; }
+.selector--mini .sel-card b { padding: 0; font-size: .92rem; white-space: nowrap; }
+.selector--mini .sel-card:hover { transform: none; }
+.selector--mini .sel-card.is-selected::after {
+  position: static;
+  width: 1.7em; height: 1.7em;
+  font-size: .8rem;
+  margin-left: .1em;
+  box-shadow: none;
+}
 .sel-current {
   font-family: var(--font-display);
   font-size: clamp(1.2rem, 3vw, 1.7rem);
@@ -631,6 +645,8 @@ table.precios tr:hover td { background: rgba(193, 18, 32, .07); }
 .footer__contact svg { width: 1.05em; height: 1.05em; fill: var(--blood-bright); flex: none; }
 .footer__legal {
   margin-top: 2.6rem; padding-top: 1.3rem;
+  /* hueco a la derecha para el botón flotante de WhatsApp */
+  padding-right: 88px;
   border-top: 1px solid rgba(42, 36, 49, .5);
   display: flex; flex-wrap: wrap; gap: .5rem 1.4rem; justify-content: space-between; align-items: center;
   color: #9791a1; font-size: .82rem;

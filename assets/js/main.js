@@ -14,6 +14,19 @@
     });
   }
 
+  /* Scroll suave SOLO para anclas dentro de la misma página (el aterrizaje
+     desde otra página con #fragmento queda instantáneo, sin animación). */
+  var suave = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var destino = document.getElementById(a.getAttribute('href').slice(1));
+    if (!destino) return;
+    e.preventDefault();
+    destino.scrollIntoView({ behavior: suave ? 'smooth' : 'auto' });
+    history.pushState(null, '', a.getAttribute('href'));
+  });
+
   /* Menú móvil */
   var toggle = document.querySelector('.nav-toggle');
   var nav = document.getElementById('nav');

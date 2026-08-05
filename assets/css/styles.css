@@ -472,6 +472,8 @@ table.precios tr:hover td { background: rgba(193, 18, 32, .07); }
   scroll-snap-type: x mandatory;
   scrollbar-color: var(--blood) var(--bg-2);
 }
+.reviews--auto { scroll-snap-type: none; scrollbar-width: none; }
+.reviews--auto::-webkit-scrollbar { display: none; }
 .reviews::-webkit-scrollbar { height: 8px; }
 .reviews::-webkit-scrollbar-track { background: var(--bg-2); border-radius: 4px; }
 .reviews::-webkit-scrollbar-thumb { background: var(--blood); border-radius: 4px; }

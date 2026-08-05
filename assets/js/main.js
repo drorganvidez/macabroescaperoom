@@ -135,6 +135,38 @@
     } catch (e) { alertNativo(msg); }
   };
 
+  /* Reseñas: carrusel automático suave con bucle infinito. Se pausa con el
+     ratón encima, al tocar/arrastrar o al navegar con teclado, y no se activa
+     si el usuario prefiere movimiento reducido. */
+  var reviews = document.querySelector('.reviews');
+  if (reviews && reviews.children.length > 1 && suave) {
+    Array.prototype.slice.call(reviews.children).forEach(function (c) {
+      var clon = c.cloneNode(true);
+      clon.setAttribute('aria-hidden', 'true');
+      reviews.append(clon);
+    });
+    reviews.classList.add('reviews--auto');
+    var pausa = 0;
+    var pausar = function (ms) { pausa = Date.now() + (ms || 0); };
+    reviews.addEventListener('pointerenter', function () { pausar(1e9); });
+    reviews.addEventListener('pointerleave', function () { pausar(600); });
+    reviews.addEventListener('pointerdown', function () { pausar(1e9); });
+    reviews.addEventListener('pointerup', function () { pausar(3000); });
+    reviews.addEventListener('wheel', function () { pausar(3000); }, { passive: true });
+    reviews.addEventListener('touchstart', function () { pausar(1e9); }, { passive: true });
+    reviews.addEventListener('touchend', function () { pausar(3000); });
+    reviews.addEventListener('focusin', function () { pausar(1e9); });
+    reviews.addEventListener('focusout', function () { pausar(1500); });
+    var paso = function () {
+      if (Date.now() > pausa && document.visibilityState === 'visible') {
+        var mitad = reviews.scrollWidth / 2;
+        reviews.scrollLeft = reviews.scrollLeft >= mitad ? reviews.scrollLeft - mitad : reviews.scrollLeft + 0.6;
+      }
+      requestAnimationFrame(paso);
+    };
+    requestAnimationFrame(paso);
+  }
+
   /* Aviso de cookies */
   var KEY = 'macabro-cookies-ok';
   var box = document.getElementById('cookies');

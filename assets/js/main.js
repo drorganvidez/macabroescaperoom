@@ -103,6 +103,38 @@
     reparar();
   }
 
+  /* Los avisos del widget ERD llegan como alert() nativos del navegador;
+     los mostramos como un modal integrado en el diseño. */
+  var alertNativo = window.alert.bind(window);
+  window.alert = function (msg) {
+    try {
+      var overlay = document.createElement('div');
+      overlay.className = 'aviso-modal';
+      overlay.setAttribute('role', 'alertdialog');
+      overlay.setAttribute('aria-modal', 'true');
+      overlay.setAttribute('aria-label', 'Aviso');
+      var caja = document.createElement('div');
+      caja.className = 'aviso-modal__caja';
+      var titulo = document.createElement('h2');
+      titulo.textContent = 'Aviso';
+      var texto = document.createElement('p');
+      texto.textContent = String(msg);
+      var boton = document.createElement('button');
+      boton.className = 'btn btn--blood';
+      boton.type = 'button';
+      boton.textContent = 'Aceptar';
+      var tecla = function (e) { if (e.key === 'Escape') cerrar(); };
+      var cerrar = function () { overlay.remove(); document.removeEventListener('keydown', tecla); };
+      boton.addEventListener('click', cerrar);
+      overlay.addEventListener('click', function (e) { if (e.target === overlay) cerrar(); });
+      document.addEventListener('keydown', tecla);
+      caja.append(titulo, texto, boton);
+      overlay.append(caja);
+      document.body.append(overlay);
+      boton.focus();
+    } catch (e) { alertNativo(msg); }
+  };
+
   /* Aviso de cookies */
   var KEY = 'macabro-cookies-ok';
   var box = document.getElementById('cookies');

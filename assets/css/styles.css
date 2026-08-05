@@ -270,17 +270,29 @@ h3 { font-size: clamp(1.15rem, 2.6vw, 1.6rem); }
 }
 
 /* ---------- Franja de premios ---------- */
-.awards { padding-block: 2.2rem; border-block: 1px solid rgba(42, 36, 49, .55); background: var(--bg-2); }
+.awards {
+  padding-block: clamp(2.8rem, 6vw, 4.8rem);
+  border-block: 1px solid rgba(201, 162, 74, .28);
+  background:
+    radial-gradient(ellipse 70% 120% at 50% 50%, rgba(201, 162, 74, .09), transparent 72%),
+    var(--bg-2);
+  text-align: center;
+}
+.eyebrow--gold { color: var(--gold); }
 .awards__grid {
   display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
-  gap: clamp(1.2rem, 4vw, 3.2rem);
+  gap: clamp(1.4rem, 5vw, 4rem);
+  margin-top: 1.4rem;
 }
 .awards__grid img {
-  width: clamp(88px, 11vw, 128px); height: auto;
-  filter: grayscale(.15);
-  transition: transform .2s, filter .2s;
+  width: clamp(124px, 15vw, 184px); height: auto;
+  filter: drop-shadow(0 0 22px rgba(201, 162, 74, .35));
+  transition: transform .25s, filter .25s;
 }
-.awards__grid img:hover { transform: scale(1.06); filter: none; }
+.awards__grid img:hover {
+  transform: scale(1.09) translateY(-4px);
+  filter: drop-shadow(0 0 34px rgba(201, 162, 74, .6));
+}
 
 /* ---------- Tarjetas de salas ---------- */
 .salas-grid {

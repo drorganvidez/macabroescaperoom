@@ -617,6 +617,10 @@ table.precios tr:hover td { background: rgba(193, 18, 32, .07); }
   color: var(--bone) !important;
 }
 
+/* Aterrizaje directo en el calendario: con #reservar en la URL, el hero
+   decorativo se oculta antes del primer pintado y no hay salto de scroll. */
+.aterrizar-reservar .hero--sub { display: none; }
+
 /* ---------- Selector de sala (página Reservas) ---------- */
 .selector {
   display: grid;

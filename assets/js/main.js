@@ -159,11 +159,14 @@
     reviews.addEventListener('focusout', function () { pausar(1500); });
     var VELOCIDAD = 32; // píxeles por segundo, independiente de los FPS
     var previo = null;
+    var pos = null; // acumulador flotante: scrollLeft redondea a enteros
     var paso = function (t) {
       if (previo !== null && Date.now() > pausa && document.visibilityState === 'visible') {
         var mitad = reviews.scrollWidth / 2;
-        var avance = Math.min((t - previo) / 1000, .1) * VELOCIDAD;
-        reviews.scrollLeft = reviews.scrollLeft >= mitad ? reviews.scrollLeft - mitad : reviews.scrollLeft + avance;
+        if (pos === null || Math.abs(reviews.scrollLeft - pos) > 2) pos = reviews.scrollLeft;
+        pos += Math.min((t - previo) / 1000, .1) * VELOCIDAD;
+        if (pos >= mitad) pos -= mitad;
+        reviews.scrollLeft = pos;
       }
       previo = t;
       requestAnimationFrame(paso);

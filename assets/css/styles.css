@@ -537,6 +537,35 @@ table.precios tr:hover td { background: rgba(193, 18, 32, .07); }
   }
 }
 
+/* ---------- Cargador del widget ERD (visible solo mientras #app está vacío) ---------- */
+.erd-loader { display: none; }
+.erd-mount:has(#app:empty) .erd-loader {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 1rem;
+  min-height: 380px;
+}
+.erd-loader img {
+  width: 76px; height: auto;
+  animation: latido 1.6s ease-in-out infinite;
+  filter: drop-shadow(0 0 18px rgba(230, 37, 51, .55));
+}
+.erd-loader span {
+  color: var(--muted);
+  font-size: .85rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+}
+.erd-mount--light .erd-loader span { color: #6b645e; }
+@keyframes latido {
+  0%, 100% { transform: scale(1); opacity: .7; }
+  50% { transform: scale(1.12); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .erd-loader img { animation: none; }
+}
+
 /* ---------- Modal de avisos (sustituye a los alert() del widget ERD) ---------- */
 .aviso-modal {
   position: fixed; inset: 0; z-index: 400;

@@ -517,6 +517,13 @@ table.precios tr:hover td { background: rgba(193, 18, 32, .07); }
 .booking { background: var(--bg-2); border-block: 1px solid rgba(42, 36, 49, .55); }
 .booking .erd-mount { margin-top: 2rem; min-height: 420px; }
 
+/* Parche de contraste para el widget ERD sobre fondo oscuro: la fecha del
+   paso "Selecciona la hora" llega con un color casi negro desde el panel. */
+.erd-mount:not(.erd-mount--light) .checkout-slots-heading__date,
+.erd-mount:not(.erd-mount--light) .checkout-slots-heading {
+  color: var(--bone) !important;
+}
+
 /* ---------- Selector de sala (página Reservas) ---------- */
 .selector {
   display: grid;

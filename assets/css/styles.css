@@ -673,6 +673,16 @@ table.precios tr:hover td { background: rgba(193, 18, 32, .07); }
   margin-left: .1em;
   box-shadow: none;
 }
+.sel-tag {
+  font-style: normal;
+  font-size: .58rem; font-weight: 800;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: #fff;
+  background: linear-gradient(160deg, var(--blood-bright), var(--blood-deep));
+  padding: .3em .7em;
+  border-radius: 999px;
+  vertical-align: middle;
+}
 .sel-current {
   font-family: var(--font-display);
   font-size: clamp(1.2rem, 3vw, 1.7rem);

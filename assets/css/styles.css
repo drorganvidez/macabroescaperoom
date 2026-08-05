@@ -163,7 +163,8 @@ h3 { font-size: clamp(1.15rem, 2.6vw, 1.6rem); }
   border-bottom: 2px solid transparent;
   transition: color .15s, border-color .15s;
 }
-.nav a:not(.btn):hover, .nav a[aria-current="page"] { color: var(--blood-bright); border-bottom-color: var(--blood); }
+.nav a:not(.btn):hover, .nav a:not(.btn)[aria-current="page"] { color: var(--blood-bright); border-bottom-color: var(--blood); }
+.nav .btn[aria-current="page"] { color: #fff; box-shadow: 0 0 34px rgba(230, 37, 51, .7); }
 .nav .btn { padding: .65em 1.4em; font-size: .8rem; }
 .nav__salas { position: relative; }
 .nav__salas > button {

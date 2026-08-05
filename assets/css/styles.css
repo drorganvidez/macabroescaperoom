@@ -520,6 +520,18 @@ table.precios tr:hover td { background: rgba(193, 18, 32, .07); }
 .booking { background: var(--bg-2); border-block: 1px solid rgba(42, 36, 49, .55); }
 .booking .erd-mount { margin-top: 2rem; min-height: 420px; }
 
+/* Centrado del widget ERD: sus columnas Bootstrap (5/12 + 7/12) dejan el
+   bloque calendario+horas descentrado respecto a los títulos; en escritorio
+   encogemos esa fila a su contenido y la centramos como una unidad. */
+@media (min-width: 992px) {
+  .erd-mount .row:has(.extended-game-with-slots) { justify-content: center; }
+  .erd-mount .row:has(.extended-game-with-slots) > [class*="col"] {
+    flex: 0 1 auto;
+    width: auto;
+    max-width: none;
+  }
+}
+
 /* Parche de contraste para el widget ERD sobre fondo oscuro: la fecha del
    paso "Selecciona la hora" llega con un color casi negro desde el panel. */
 .erd-mount:not(.erd-mount--light) .checkout-slots-heading__date,

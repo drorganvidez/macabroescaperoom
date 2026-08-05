@@ -157,11 +157,15 @@
     reviews.addEventListener('touchend', function () { pausar(3000); });
     reviews.addEventListener('focusin', function () { pausar(1e9); });
     reviews.addEventListener('focusout', function () { pausar(1500); });
-    var paso = function () {
-      if (Date.now() > pausa && document.visibilityState === 'visible') {
+    var VELOCIDAD = 32; // píxeles por segundo, independiente de los FPS
+    var previo = null;
+    var paso = function (t) {
+      if (previo !== null && Date.now() > pausa && document.visibilityState === 'visible') {
         var mitad = reviews.scrollWidth / 2;
-        reviews.scrollLeft = reviews.scrollLeft >= mitad ? reviews.scrollLeft - mitad : reviews.scrollLeft + 0.6;
+        var avance = Math.min((t - previo) / 1000, .1) * VELOCIDAD;
+        reviews.scrollLeft = reviews.scrollLeft >= mitad ? reviews.scrollLeft - mitad : reviews.scrollLeft + avance;
       }
+      previo = t;
       requestAnimationFrame(paso);
     };
     requestAnimationFrame(paso);

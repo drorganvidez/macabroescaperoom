@@ -83,6 +83,21 @@
       mount.querySelectorAll('.checkout-slots-heading, .checkout-slots-heading__date').forEach(function (el) {
         el.style.setProperty('color', '#e9e2d6', 'important');
       });
+      /* Fondo de la sala en el panel de horas: si el juego no tiene imagen
+         configurada en el panel de ERD, inyectamos la nuestra imitando el
+         div .game-background que el widget crea para los juegos que sí. */
+      var deseado = mount.getAttribute('data-game-bg');
+      if (deseado) {
+        var host = mount.querySelector('.extended-game-with-slots');
+        if (host && !host.querySelector('.game-background')) {
+          var logo = document.querySelector('.header__logo img');
+          var base = logo ? logo.getAttribute('src').replace(/logo\.webp$/, '') : './assets/img/';
+          var bg = document.createElement('div');
+          bg.className = 'game-background';
+          bg.style.cssText = 'background-image:url(' + base + deseado + ');opacity:.7';
+          host.insertBefore(bg, host.firstChild);
+        }
+      }
     };
     new MutationObserver(reparar).observe(mount, { childList: true, subtree: true });
     reparar();
